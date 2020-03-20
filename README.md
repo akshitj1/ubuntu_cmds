@@ -11,17 +11,17 @@ clear terminal| `ctrl+l`
 `dpkg-reconfigure keyboard-configuration` and then restart.
 2. swap `super` and `ctrl` keys
 [ref](https://ineed.coffee/881/configure-the-keyboard-for-your-macbook-and-ubuntu-12-04/)
+create file `~/.Xmodmap` with contents 
 ```bash
-echo -e "remove control = Control_L\n\
-remove mod4 = Super_L Super_R\n\
-keysym Control_L = Super_L\n\
-keysym Super_L = Control_L\n\
-keysym Super_R = Control_L\n\
-add control = Control_L Control_R\n\
-add mod4 = Super_L Super_R" > ~/.Xmodmap
-
-xmodmap ~/.Xmodmap
+remove control = Control_L
+remove mod4 = Super_L Super_R
+keysym Control_L = Super_L
+keysym Super_L = Control_L
+keysym Super_R = Control_L
+add control = Control_L Control_R
+add mod4 = Super_L Super_R
 ```
+and then run `xmodmap ~/.Xmodmap`
 
 ## Brightness bug fix
 add this to `touch /etc/rc.local && chmod +x /etc/rc.local` (init script)
@@ -35,3 +35,20 @@ exit 0
 
 To manually start without restart:  
 `systemctl start/status rc-local.service`
+
+## Ubuntu Overheating fix (didn't worked)
+disable intel_pstate [ref](https://brezular.com/2019/02/05/ubuntu-18-04-overheating/)
+
+check no longer intel_pstate after restart  
+`cat /sys/devices/system/cpu/cpu*/cpufreq/scaling_driver`
+
+## blue light filter(flux like)
+
+install redshift `apt-get install redshift`. add config `~/.config/redshift.conf` from [doc](http://jonls.dk/redshift/)
+with values 
+```
+temp-day=4500
+temp-night=2500
+lat=20.6
+lon=79
+```
