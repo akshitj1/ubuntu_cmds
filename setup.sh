@@ -16,6 +16,12 @@ dpkg -l | grep nvidia
 # may not be necessary. caution: remove if needs to be blacklisted 
 echo 'nouveau' | sudo tee -a /etc/modules
 
+# mount external harddisk
+sudo apt-get install vim
+sudo apt install terminator
+sudo apt-get install exfat-fuse exfat-utils
+# mount from file explorer
+
 # setup git
 ssh-keygen
 sudo apt install xclip
@@ -35,5 +41,31 @@ sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/packages.microso
 sudo apt-get install apt-transport-https
 sudo apt-get update
 sudo apt-get install code
+# Install extensions https://code.visualstudio.com/docs/editor/extension-gallery
+code --install-extension ms-vscode.cpptools
+code --install-extension ms-iot.vscode-ros
 
 
+
+# setup redshift
+sudo apt-get install redshift
+redshift -O 2200
+
+
+# install ros http://wiki.ros.org/melodic/Installation/Ubuntu
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+sudo apt update
+sudo apt install ros-melodic-desktop-full
+sudo apt-get install python-rosdep
+sudo rosdep init
+rosdep update
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc && source ~/.bashrc
+sudo apt-get install python-pip
+sudo pip install catkin-tools
+
+# begin setting up workspace
+CATKIN_HOME=~/ext/workspace/catkin_ws
+cd $CATKIN_HOME
+catkin build
+echo "source $CATKIN_HOME/devel/setup.bash" >> ~/.bashrc && source ~/.bashrc
